@@ -20,11 +20,12 @@ val solrVersionMap = mapOf( //
      */
     "8.11" to "8.11.2", //
     "9.2" to "9.2.1", //
-    "9.5" to "9.5.0"
+    "9.5" to "9.5.0", //
+    "9.7" to "9.7.0"
 )
-val solrVersion = solrVersionMap[CCV2.manifest.solrVersion] ?: "9.2.1"
+val solrVersion = solrVersionMap[CCV2.manifest.solrVersion] ?: "9.7.0"
 
-val cloudHotfolderVersion = "2211"
+val cloudHotfolderVersion = "2211azuresdk12-20241205"
 
 val dependencyDir = "dependencies"
 val workingDir = project.projectDir
@@ -142,7 +143,7 @@ tasks.ybuild {
 
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "8.10.2"
+    gradleVersion = "8.13"
 }
 
 //Optional: automate downloads from launchpad.support.sap.com

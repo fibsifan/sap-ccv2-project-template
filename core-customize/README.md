@@ -6,13 +6,13 @@
 >    using the correct file name, e.g.
 >
 >    ```bash
->    cp ~/Downloads/CXCOMCL221100U_23*.ZIP ./dependencies/hybris-commerce-suite-2211.23.zip
+>    cp ~/Downloads/CXCOMCL221100U_37*.ZIP ./dependencies/hybris-commerce-suite-2211.37.zip
 >    ```
 >    *Or* configure your S-User (e.g. using `gradle.properties`) and run `./gradlew downloadAndVerifyPlatform`
 > 2. Repeat the same for Integration extension pack if you want to use it.
-> 3. Download the [cloudhotfolders ZIP] into the `dependencies` folder (save as `cloudhotfolders-2211.zip`). If you
->    don't need cloudhotfolders locally you can also remove them from the `build.gradle.kts` and the generated
->    `localextensions.xml` after the next step.
+> 3. Download the latest [cloudhotfolders ZIP] into the `dependencies` folder. Adapt the cloudHotfolderVersion
+>    in `build.gradle.kts`. If you don't need cloudhotfolders locally you can also remove them from the
+>    `build.gradle.kts` and the generated `localextensions.xml` after the next step.
 > 4. Bootstrap the starting point for your Commerce project by running the following command:
 >
 >    ```bash
@@ -27,6 +27,7 @@
 >       - `-PsolrVersion=9.2` set the solr version for the manifest. To check which versions are supported, see
 >         Third-Party compatibility of the [Update Release Notes][update] of your selected version.
 >       - `-PaccStorefrontEnabled` enable code generation for the deprecated accelerator storefront.
+>       - `-PazureCloudExtensionDisabled` disable the local usage of azure cloudhotfolders
 >
 > 5. Review the generated configuration in `hybris/config`, especially the `hybris/config/environment/*.properties`
 >    files and `localextensions.xml` (search for `TODO:` comments)
