@@ -126,6 +126,7 @@ publishing {
 }
 
 tasks.named("yinstallSolr") {
+    mustRunAfter("bootstrapPlatform")
     // this task is available because of the solr-publication above.
     dependsOn("publishSolrPublicationToMavenLocal")
 }
@@ -170,11 +171,11 @@ if (project.hasProperty("sUser") && project.hasProperty("sUserPass")) {
         checksum("$commerceSuiteChecksum")
     }
 
-    tasks.named("bootstrapPlatform") {
+    tasks.named("unpackPlatform") {
         dependsOn("downloadAndVerifyPlatform")
     }
 
-    tasks.named("bootstrapPlatformSparse") {
+    tasks.named("unpackPlatformSparse") {
         dependsOn("downloadAndVerifyPlatform")
     }
 
