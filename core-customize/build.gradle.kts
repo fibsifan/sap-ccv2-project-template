@@ -19,12 +19,13 @@ val solrVersionMap = mapOf( //
      * manifest.json
      */
     "8.11" to "8.11.2", //
-    "9.2" to "9.2.1", //
-    "9.5" to "9.5.0"
+    "9.5" to "9.5.0", //
+    "9.7" to "9.7.0", //
+    "9.8" to "9.8.0"
 )
-val solrVersion = solrVersionMap[CCV2.manifest.solrVersion] ?: "9.2.1"
+val solrVersion = solrVersionMap[CCV2.manifest.solrVersion] ?: "9.7.0"
 
-val cloudHotfolderVersion = "2211"
+val cloudHotfolderVersion = "2211azuresdk12-20241205"
 
 val dependencyDir = "dependencies"
 val workingDir = project.projectDir
@@ -105,18 +106,12 @@ tasks.register<Copy>("bootstrapCloudhotfolder") {
     into("${binDir}/cloudhotfolders")
 }
 
-tasks.register<Download>("fetchSolr") {
+var fetchSolr = tasks.register<Download>("fetchSolr") {
     src(uri("https://archive.apache.org/dist/solr/solr/${solrVersion}/solr-${solrVersion}.tgz"))
     dest("${dependencyDir}/solr-${solrVersion}.tgz")
     overwrite(false) // to only download solr into the dependency folder if it's not there yet.
 }
 
-val repackSolr = tasks.register<Zip>("repackSolr") {
-    dependsOn("fetchSolr")
-    from(tarTree("${dependencyDir}/solr-${solrVersion}.tgz"))
-    archiveFileName = "solr-${solrVersion}.zip"
-    destinationDirectory = file(dependencyDir)
-}
 
 publishing {
     publications {
@@ -125,7 +120,7 @@ publishing {
             artifactId = "solr"
             version = solrVersion
 
-            artifact(repackSolr.get().archiveFile)
+            artifact(fetchSolr)
         }
     }
 }
@@ -179,6 +174,10 @@ if (project.hasProperty("sUser") && project.hasProperty("sUserPass")) {
         dependsOn("downloadAndVerifyPlatform")
     }
 
+    tasks.named("bootstrapPlatformSparse") {
+        dependsOn("downloadAndVerifyPlatform")
+    }
+
     //check if Integration Extension Pack is configured and download it too
     if (CCV2.manifest.extensionPacks.any{ "hybris-commerce-integrations" == it.name }) {
         val integrationExtensionPackVersion = CCV2.manifest.extensionPacks.first{ "hybris-commerce-integrations" == it.name }.version
@@ -202,7 +201,11 @@ if (project.hasProperty("sUser") && project.hasProperty("sUserPass")) {
             checksum("$commerceIntegrationsChecksum")
         }
 
-        tasks.named("bootstrapPlatform") {
+        tasks.named("unpackPlatform") {
+            dependsOn("downloadAndVerifyIntExtPack")
+        }
+
+        tasks.named("unpackPlatformSparse") {
             dependsOn("downloadAndVerifyIntExtPack")
         }
     }
