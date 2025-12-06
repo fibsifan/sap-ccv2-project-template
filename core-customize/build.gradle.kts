@@ -6,9 +6,9 @@ import de.undercouch.gradle.tasks.download.Verify
 import java.time.Instant
 
 plugins {
-    id("sap.commerce.build") version("4.1.0")
-    id("sap.commerce.build.ccv2") version("4.1.0")
-    id("de.undercouch.download") version("5.5.0") // for downloading solr-9.x.tgz and optionally SAP Commerce Cloud zips.
+    id("sap.commerce.build") version("5.0.2")
+    id("sap.commerce.build.ccv2") version("5.0.2")
+    id("de.undercouch.download") version("5.6.0") // for downloading solr-9.x.tgz and optionally SAP Commerce Cloud zips.
     `maven-publish` // for publishing to the local maven repo
 }
 
@@ -138,7 +138,7 @@ tasks.ybuild {
 
 tasks.wrapper {
     distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = "8.14.2"
+    gradleVersion = "9.2.1"
 }
 
 //Optional: automate downloads from launchpad.support.sap.com
@@ -150,7 +150,7 @@ if (project.hasProperty("sUser") && project.hasProperty("sUserPass")) {
     val sUserPassword = project.property("sUserPass") as String
     val authorization = java.util.Base64.getEncoder().encodeToString(("$sUser:$sUserPassword").toByteArray())
 
-    val commerceVersion = CCV2.manifest.commerceSuiteVersion
+    val commerceVersion = CCV2.manifest.effectiveVersion
     val commerceSuiteDownloadUrl = project.property("com.sap.softwaredownloads.commerceSuite.${commerceVersion}.downloadUrl")
     val commerceSuiteChecksum = project.property("com.sap.softwaredownloads.commerceSuite.${commerceVersion}.checksum")
     

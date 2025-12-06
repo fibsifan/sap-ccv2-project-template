@@ -61,7 +61,7 @@ local smartEditWebapps = [
 ];
 
 // ------------ MANIFEST ------------
-function(intExtPackVersion=null, solrVersion=null, solrCustom='solr', accStorefrontEnabled=false, storefrontExtension=nulll, commerceVersion='2211.38') {
+function(intExtPackVersion=null, solrVersion=null, solrCustom='solr', accStorefrontEnabled=false, storefrontExtension=nulll, commerceVersion='2211-jdk21.4') {
   commerceSuiteVersion: commerceVersion,
   extensionPacks: [
   ] + if intExtPackVersion != null then [

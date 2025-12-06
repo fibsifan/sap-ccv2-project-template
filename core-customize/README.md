@@ -23,7 +23,7 @@
 >    **Read the output!**
 >
 >    The following optional settings are available:
->       - `-PintExtPackVersion=2102.1` enable "SAP Commerce Cloud, Integration Extension Pack" with version.
+>       - `-PintExtPackVersion=2211-jdk21.1` enable "SAP Commerce Cloud, Integration Extension Pack" with version.
 >       - `-PsolrVersion=9.2` set the solr version for the manifest. To check which versions are supported, see
 >         Third-Party compatibility of the [Update Release Notes][update] of your selected version.
 >       - `-PaccStorefrontEnabled` enable code generation for the deprecated accelerator storefront.
